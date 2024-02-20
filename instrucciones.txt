@@ -1,0 +1,50 @@
+===== INFORMACION DE CONEXION =====
+===================================
+
+
+# Configura el puerto del servidor en 4001
+server.port=4001
+
+# Habilita la visualización de las consultas SQL ejecutadas por Spring JPA
+spring.jpa.show-sql=true
+
+# Configura la URL del origen de datos para PostgreSQL
+spring.datasource.url=jdbc:postgresql://vnudkljo:vI6YI8H3gHsPUc52TwxGgXwUVh2sVl2o@kashin.db.elephantsql.com/vnudkljo
+
+# Establece el nombre de usuario para el origen de datos de PostgreSQL
+spring.datasource.username=vnudkljo
+
+# Establece la contraseña para el origen de datos de PostgreSQL
+spring.datasource.password=vI6YI8H3gHsPUc52TwxGgXwUVh2sVl2o
+
+# Establece el dialecto de Hibernate para PostgreSQL
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# Establece el perfil activo como 'dev'
+spring.profiles.active=dev
+
+# Actualiza automáticamente el esquema de la base de datos basándose en las clases de entidad de JPA para cuando se crea una nueva entidad la base de datos se actualiza
+spring.jpa.hibernate.ddl-auto=update
+
+# Habilita el formateo de las consultas SQL por parte de Hibernate
+spring.jpa.properties.hibernate.format_sql=true
+
+
+
+==== RELACION ENTRE LAS ENTIDADES Rol UsuarioRol y Usuario====
+==============================================================}
+1)  Usuario @OneToMany un usuario va a tener muchos roles por lo tanto la relacion uno a muchos con UsuarioRol, es decir un usuairo puede tener multiples roles
+    fetch = FetchType.EAGER esto significa que sera una busqueda ansiosa es decir al momento de hacer una busqueda de esta entidad
+    me va a lanzar todos los registros a los cuales este relacionada esta entidad
+
+    mappedBy = "usuario" indica que el usuario agregado principal mente va a ser el propietario de la relacion
+    CascadeType.ALL Permite que si yo elimino un usuario ese usuairo se va a eliminar de las demas relaciones 
+    cascade tambien me permite o le permite a JPA mapear un set de datos a una tabla en la base de datos, tal cual
+
+2) Existe una relacion muchos a muchos entre usuarios y roles por lo que se crea una tabla intermedia llamada usuarioROl
+
+
+
+
+==== Despues de crear los repositorios necesarios para las relaciones entre Usuario y Rol
+==== Vamos hasta nuestra clase principal del proyecto a injectar un servicio 
