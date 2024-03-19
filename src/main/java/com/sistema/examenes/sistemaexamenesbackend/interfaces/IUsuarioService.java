@@ -1,5 +1,6 @@
 package com.sistema.examenes.sistemaexamenesbackend.interfaces;
 
+import java.util.Optional;
 import java.util.Set;
 import com.sistema.examenes.sistemaexamenesbackend.entities.Usuario;
 import com.sistema.examenes.sistemaexamenesbackend.entities.UsuarioRol;
@@ -12,5 +13,5 @@ public interface IUsuarioService {
 
      public Usuario obtenerUsuario (String username);
 
-     public void eliminarUsuario(Long usuaioId) throws Exception;
+     public boolean eliminarUsuario(Long usuaioId) throws Exception;
 }

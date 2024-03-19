@@ -23,41 +23,41 @@ public class SistemaExamenesBackendApplication implements CommandLineRunner {
 		SpringApplication.run(SistemaExamenesBackendApplication.class, args);
 	}
 
-	// implementamos de CommandLineRunner para que el seiguiente metodo se ejecute
+	// implementamos de CommandLineRunner para que el seiguiente metodo se ejecute cuando la aplicacion inicie solo sera para cuando se inicia por primera vez
 	@Override
 	public void run(String... args) throws Exception {
 		// Creación de un nuevo usuario
-		Usuario usuario = new Usuario();
-		usuario.setNombre("Euclides");
-		usuario.setApellido("Pérez");
-		usuario.setUsername("euclides");
-		usuario.setPassword("123456");
-		usuario.setEmail("euclides@gmail.com.co");
-		usuario.setTelefono("3122349449");
-		usuario.setPerfil("foto.png");
+		// Usuario usuario = new Usuario();
+		// usuario.setNombre("Euclides");
+		// usuario.setApellido("Pérez");
+		// usuario.setUsername("euclides");
+		// usuario.setPassword("123456");
+		// usuario.setEmail("euclides@gmail.com.co");
+		// usuario.setTelefono("3122349449");
+		// usuario.setPerfil("foto.png");
 		
 
 		// Creación de un nuevo rol
-		Rol rol = new Rol();
-		rol.setId(1L);
-		rol.setName("ADMIN");
+		// Rol rol = new Rol();
+		// rol.setId(1L);
+		// rol.setName("ADMIN");
 
 		// Creación de una relación entre el usuario y el rol
 		//usuarioRoles es un conjunto (Set) que contiene múltiples objetos de tipo UsuarioRol. 
-		Set<UsuarioRol> usuarioRoles = new HashSet<UsuarioRol>();
+		// Set<UsuarioRol> usuarioRoles = new HashSet<UsuarioRol>();
 
 		// creacion de un objeto de tipo HashSet<UsuarioRol>, contendra objetos de ripo Usuario y de tipo Rol
 		//usuarioRol, por otro lado, es un solo objeto de tipo UsuarioRol un objeto de tipo Rol y uno de tipo ROl
-		UsuarioRol usuarioRol = new UsuarioRol();
-		usuarioRol.setRol(rol);
-		usuarioRol.setUsuario(usuario);
+		// UsuarioRol usuarioRol = new UsuarioRol();
+		// usuarioRol.setRol(rol);
+		// usuarioRol.setUsuario(usuario);
 
 		// agregamos al HashSet los objetos usuairoRol, aqui ya contiene los objetos necesarios
-		usuarioRoles.add(usuarioRol);
+		// usuarioRoles.add(usuarioRol);
 
 		// Guardado del usuario con su rol asociado utilizando el servicio de usuario
-		Usuario usuarioGuardado =  usuarioService.guardarUsuario(usuario, usuarioRoles);
-		System.out.println(usuarioGuardado.getUsername());
+		// Usuario usuarioGuardado =  usuarioService.guardarUsuario(usuario, usuarioRoles);
+		// System.out.println(usuarioGuardado.getUsername());
 	}
 
 }

@@ -1,0 +1,10 @@
+Al momento de enviar una peticion me retornava de modo infinito 
+la solucion fue la siguiente
+
+===== En la clase usuario debajo de la relacion agrgamos la anotacion @JsonIgnore
+
+contexto: 
+Jackson estaba tratando de serializar la propiedad usuarioRol y, al hacerlo, estaba ingresando en un bucle infinito debido a la relación entre entidades.
+Esta situación suele ocurrir cuando tienes una relación bidireccional entre entidades y Jackson intenta serializar ambas partes de la relación.
+ Al agregar @JsonIgnore a la propiedad usuarioRol, estás diciendo explícitamente a Jackson que no serialice esa propiedad, 
+ lo que evita que entre en el bucle infinito.

@@ -1,0 +1,12 @@
+... Diferencia entre HashSet y List
+
+# Un HashSet
+? implementa la interfaz Set, lo que significa que no permite elementos duplicados. Si intentas agregar un elemento que ya existe en el HashSet, este simplemente ignorará la operación.
+? Los elementos en un HashSet no están ordenados. No hay garantía de que los elementos se mantendrán en el orden en el que se insertaron.
+? Utiliza una estructura de datos de tabla hash para almacenar elementos, lo que permite una búsqueda y recuperación rápida de elementos.
+? List:
+? 
+# Una List
+? es una colección ordenada de elementos que permite elementos duplicados. Puedes tener múltiples elementos iguales en una List.
+? Los elementos en una List están ordenados y mantenidos en el orden en el que se insertaron. Puedes acceder a los elementos por su índice.
+? Implementaciones comunes de List en Java incluyen ArrayList y LinkedList, que utilizan arreglos y listas enlazadas, respectivamente, para almacenar elementos.

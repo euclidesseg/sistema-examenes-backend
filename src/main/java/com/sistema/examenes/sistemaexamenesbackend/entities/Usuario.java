@@ -1,7 +1,13 @@
 package com.sistema.examenes.sistemaexamenesbackend.entities;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,7 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements UserDetails{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)// autoincrementable
@@ -31,8 +37,10 @@ public class Usuario {
     private boolean enabled = true;
     private String perfil; 
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario") // relacion con usuarioRol lo que quiere decir que un usuairo peude tener muchos roles
-    private Set<UsuarioRol> usuarioRol = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario") // relacion con usuarioRol lo que quiere decir
+                                                                                         //que un usuairo peude tener muchos roles
+    @JsonIgnore
+    private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
 
 
@@ -110,16 +118,47 @@ public class Usuario {
     }
 
     public Set<UsuarioRol> getUsuarioRol() {
-        return usuarioRol;
+        return usuarioRoles;
     }
 
     public void setUsuarioRol(Set<UsuarioRol> usuarioRol) {
-        this.usuarioRol = usuarioRol;
+        this.usuarioRoles = usuarioRol;
     }
 
 
     public Usuario(){
         
+    }
+
+
+    //... Desde aqui implementamos seguriadad
+
+    //... Me va a retornar una coleccion de autoridades es decir los permisos o roles del usuario
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Authority>  autoridades = new HashSet<>();
+
+        this.usuarioRoles.forEach((usuarioRol) ->{ // recorremos y retornamos los roles de un usuario para saber que permisos tiene estos son agregados a un HasSet 
+            autoridades.add(new Authority(usuarioRol.getRol().getName()));
+        } );
+        return autoridades;
+        //![{"authority":"ROLE_ADMIN"}, {"authority":"ROLE_USER"}]
+
+    }
+
+    @Override  // la cuenta va a expirar?
+    public boolean isAccountNonExpired() {
+      return true;
+    }
+
+    @Override  // la cuenta no estara bloqueada
+    public boolean isAccountNonLocked() {
+       return true;
+    }
+
+    @Override // las cuentas van no van a expirar?
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
     
 }
