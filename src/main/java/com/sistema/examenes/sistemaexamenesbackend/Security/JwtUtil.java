@@ -29,10 +29,16 @@ public class JwtUtil {
     }
 
     //== Utilidad para extraer cualquier reclamo del tocken (clain)
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) { //== El tipo genérico <T> se utiliza para permitir la extracción de cualquier tipo de reclamo del token.
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+
+    /*// # La sintaxis Function<Claims, T> indica que extractClaim toma una función que toma un objeto Claims como entrada y devuelve un tipo T */
+    /*//# Claims es una clase proporcionada por la biblioteca io.jsonwebtoken  */
+    /*//# los claims o reclamos Estos reclamos se almacenan en la sección de payload del token JWT  y pueden ser utilizados para transmitir información como el identificador del usuario, roles, */
+
+
 
     //== Extrae todos los reclamos del del tocken
     private Claims extractAllClaims(String token) {
