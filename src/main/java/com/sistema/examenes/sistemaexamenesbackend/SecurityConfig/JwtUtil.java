@@ -1,4 +1,4 @@
-package com.sistema.examenes.sistemaexamenesbackend.Security;
+package com.sistema.examenes.sistemaexamenesbackend.SecurityConfig;
 
 import java.util.Date;
 import java.util.HashMap;

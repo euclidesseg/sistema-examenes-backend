@@ -21,7 +21,7 @@ public class UserDetailServiceIMPL implements UserDetailsService { // implementa
         
         Usuario usuario = this.usuarioRepository.findByUsername(username); //!obtengo el usuario
         if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario no encontrado");
+            throw new UsernameNotFoundException("user not found");
         }else{
             return usuario;
         }

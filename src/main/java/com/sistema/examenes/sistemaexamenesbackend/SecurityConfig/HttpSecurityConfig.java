@@ -1,7 +1,8 @@
-package com.sistema.examenes.sistemaexamenesbackend.Security;
+package com.sistema.examenes.sistemaexamenesbackend.SecurityConfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -18,46 +19,29 @@ import com.sistema.examenes.sistemaexamenesbackend.services.UserDetailServiceIMP
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 // * me premite especificar la configuracion para permitir el acceso a las
 // * distintas areas de la aplicacion como lo son servicios repositorios o
 // * controlador
 @EnableWebSecurity
-@Component
+@Configuration
 @EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true)// * Habilita la seguridad a nivel metodo
 
-public class SecurityConfig {
+public class HttpSecurityConfig {
 
 	@Autowired
-	private JwtAuthenticationEntryPoint unauthorizeHandler;
+	SecurityBeansInjector securityBeansInjector;
 
-	@Autowired
-	private UserDetailServiceIMPL userDetailService;
-
-	@Autowired(required = true)
-	@Bean
-	public AuthenticationProvider authenticationProvider(){
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(null);
-		provider.setPasswordEncoder(null);
-		return provider;
-	}
 	@Autowired
 	JwtAuthenticationFilter jwtAuthenticationFilter;
-
-	@Bean
-	public FilterChainProxy filterChainProxy(ServerHttpSecurity http) throws Exception {
-		return (FilterChainProxy) http.build();
-	}
-
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 				.csrf(csrsConfig -> csrsConfig.disable()) // desactiva crsf
 				.cors(corsConfig -> corsConfig.disable()) // desactiva cors
 				.sessionManagement(	sesionManagConfig -> sesionManagConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authenticationProvider(authenticationProvider())
+				.authenticationProvider(this.securityBeansInjector.authenticationProvider())
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 				// .authorizeHttpRequests(builderRequstMathers());
 		return http.build();

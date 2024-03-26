@@ -135,28 +135,28 @@ public class Usuario implements UserDetails{
 
     //... Me va a retornar una coleccion de autoridades es decir los permisos o roles del usuario
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Authority>  autoridades = new HashSet<>();
+    public Collection<? extends GrantedAuthority> getAuthorities() { //== permisos concedidos
+        Set<Authority>  authorities = new HashSet<>();
 
         this.usuarioRoles.forEach((usuarioRol) ->{ // recorremos y retornamos los roles de un usuario para saber que permisos tiene estos son agregados a un HasSet 
-            autoridades.add(new Authority(usuarioRol.getRol().getName()));
+            authorities.add(new Authority("ROLE_"+ usuarioRol.getRol().getName()));
         } );
-        return autoridades;
+        return authorities;
         //![{"authority":"ROLE_ADMIN"}, {"authority":"ROLE_USER"}]
 
     }
 
-    @Override  // la cuenta va a expirar?
+    @Override  // la cuenta esta expirada?
     public boolean isAccountNonExpired() {
       return true;
     }
 
-    @Override  // la cuenta no estara bloqueada
+    @Override  // la cuenta no está bloqueada
     public boolean isAccountNonLocked() {
        return true;
     }
 
-    @Override // las cuentas van no van a expirar?
+    @Override // las cuentas no estan expiradas expirar?
     public boolean isCredentialsNonExpired() {
         return true;
     }
