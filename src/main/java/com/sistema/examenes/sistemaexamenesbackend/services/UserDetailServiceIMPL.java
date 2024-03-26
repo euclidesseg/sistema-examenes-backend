@@ -10,7 +10,7 @@ import com.sistema.examenes.sistemaexamenesbackend.entities.Usuario;
 import com.sistema.examenes.sistemaexamenesbackend.repositories.IUsuarioRepository;
 
 @Service
-public class UserDetailService implements UserDetailsService { // implementa de userDetailService clase de Spring
+public class UserDetailServiceIMPL implements UserDetailsService { // implementa de userDetailService clase de Spring
                                                                // securyti para buscar un usuario por username
 
     @Autowired

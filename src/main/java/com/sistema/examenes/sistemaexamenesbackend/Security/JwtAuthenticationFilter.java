@@ -7,9 +7,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.sistema.examenes.sistemaexamenesbackend.services.UserDetailService;
+import com.sistema.examenes.sistemaexamenesbackend.services.UserDetailServiceIMPL;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -19,10 +20,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 // # deste esta clase llamare a los metodos de la clase JwtUtil para implementar la lógica de extraer el tocken y validarlo
 // # Esta clase se centra principalmente en la validación y procesamiento de un token JWT recibido en una solicitud entrante para autenticar al usuario.
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserDetailService userDetailService;
+    private UserDetailServiceIMPL userDetailServiceImpl;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -52,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //!---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) { // == Verificar si se ha extraído con éxito el nombre de usuario del token JWT y verificar si en el contexto de la seguridad hay una autenticación establecida
-            UserDetails userDetails = this.userDetailService.loadUserByUsername(username); // == Cargar los detalles del usuario utilizando el servicio de detalles de usuario con el username extraido antes clase de spring securyti core
+            UserDetails userDetails = this.userDetailServiceImpl.loadUserByUsername(username); // == Cargar los detalles del usuario utilizando el servicio de detalles de usuario con el username extraido antes clase de spring securyti core
             if (this.jwtUtil.validateToken(jwtToken, userDetails)) { // == Validar el token JWT para verificar si es válido y está asociado con el usuario
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken;// == crea un objeto para crear almacenar la autenticación de un usuario en el contexto de spring security
                 usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken( userDetails, null, userDetails.getAuthorities()); //== se establecen los detalles del usuario que se esta autenticando
